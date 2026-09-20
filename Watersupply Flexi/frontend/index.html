@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaterCare AI - AI-Powered Water Supply Complaint Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/citizen.css">
+</head>
+<body>
+
+  <!-- TOP PUBLIC NAVBAR -->
+  <header class="citizen-nav">
+    <div class="nav-brand">
+      <div class="water-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="#ffffff" stroke="#ffffff"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="nav-title">WaterCare AI</h1>
+        <p class="nav-subtitle">AI-Powered Water Supply Complaint Service</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="/admin" class="btn-admin">
+        <span>⚙️ Admin Dashboard</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-badge">💧 Smart Public Grievance Redressal</div>
+    <h2 class="hero-title">Report Water Supply Issues <span>Easily</span></h2>
+    <p class="hero-desc">
+      Report water supply disruptions, pipeline leaks, pressure issues, or contaminated water. Our AI complaint agent registers your ticket and assigns it directly to your zonal water officer.
+    </p>
+  </section>
+
+  <!-- CITIZEN PORTAL MAIN WRAPPER -->
+  <main class="portal-container">
+
+    <!-- Active Ticket Card (Revealed upon registration) -->
+    <div class="ticket-card" id="ticket-card" style="display: none;">
+      <div class="ticket-success-header">
+        <div class="ticket-status-row">
+          <div class="check-icon">✓</div>
+          <div>
+            <div class="ticket-title">Complaint Registered Successfully</div>
+            <div style="font-size: 0.78rem; color: #166534;">Your complaint ticket has been officially generated.</div>
+          </div>
+        </div>
+        <div class="ticket-id-pill" id="card-ticket-id">TKT-XXXX</div>
+      </div>
+
+      <div class="ticket-info-grid">
+        <div class="info-item">
+          <span class="info-label">Category</span>
+          <span class="info-value" id="card-category">No Water Supply</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Location / Ward</span>
+          <span class="info-value" id="card-location">Ward 5</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Priority Level</span>
+          <span class="priority-tag" id="card-priority">HIGH</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Status</span>
+          <span class="status-tag" id="card-status">REGISTERED</span>
+        </div>
+      </div>
+
+      <div class="ticket-officer-notice" id="card-officer-notice">
+        <span>👤</span>
+        <span id="card-officer-text">Assigned Officer: Zonal Assistant Engineer (Water Division)</span>
+      </div>
+    </div>
+
+    <!-- AI Assistant Chat Card -->
+    <div class="chat-card">
+      <div class="chat-header">
+        <div class="assistant-info">
+          <div class="assistant-avatar">🤖</div>
+          <div>
+            <div class="assistant-name">WaterCare AI Assistant</div>
+            <div class="status-online">
+              <span class="online-dot"></span>
+              <span>Available 24/7</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-reset" id="reset-chat-btn" title="Start a fresh conversation">New Query</button>
+      </div>
+
+      <!-- Chat Feed -->
+      <div class="chat-messages" id="chat-messages">
+        <div class="message agent-message">
+          <div class="msg-icon">🤖</div>
+          <div class="msg-bubble">
+            <p><strong>Hello! How can I help you today?</strong></p>
+            <p>Please enter your water supply issue below. Be sure to mention your <strong>Ward or area</strong> so I can assign your ticket to the right officer.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Form -->
+      <form class="chat-input-box" id="citizen-form">
+        <input 
+          type="text" 
+          id="citizen-input" 
+          class="chat-input" 
+          placeholder="Type your water complaint here (e.g. 'No water supply in Ward 5 since yesterday')..."
+          autocomplete="off"
+          required
+        >
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span>Submit Complaint</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- 💡 Helpful Example Suggestions (Click fills the input box; does NOT auto-submit) -->
+      <div class="examples-container">
+        <div class="examples-header">
+          <span>💡</span>
+          <strong>Not sure what to write? Try an example:</strong>
+        </div>
+        <div class="examples-grid">
+          <div class="example-card" data-text="There is no water supply in Ward 5 since yesterday.">
+            <div class="example-category">💧 No Water Supply</div>
+            <div class="example-text">"There is no water supply in Ward 5 since yesterday."</div>
+          </div>
+          <div class="example-card" data-text="Water pressure is very low in my area.">
+            <div class="example-category">🚰 Low Water Pressure</div>
+            <div class="example-text">"Water pressure is very low in my area."</div>
+          </div>
+          <div class="example-card" data-text="There is a pipeline leakage near Ward 2 market.">
+            <div class="example-category">🔧 Pipeline Leakage</div>
+            <div class="example-text">"There is a pipeline leakage near Ward 2 market."</div>
+          </div>
+          <div class="example-card" data-text="The water coming from our tap looks contaminated.">
+            <div class="example-category">⚠️ Water Quality Problem</div>
+            <div class="example-text">"The water coming from our tap looks contaminated."</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="citizen-footer">
+    <p>Municipal Water Supply Complaint Management System • Powered by WaterCare AI Agent</p>
+  </footer>
+
+  <script src="/static/citizen.js"></script>
+</body>
+</html>
